@@ -1,0 +1,36 @@
+{
+	"$schema": "https://getcomposer.org/schema.json",
+	"name": "fatalus/feather",
+	"description": "A modular, minimalist PHP microframework",
+	"license": "MIT",
+	"type": "library",
+	"version": "0.1",
+	"minimum-stability": "dev",
+	"authors": [
+		{
+			"name": "fatalus",
+			"homepage": "https://fatalus.dev"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Feather\\": "src/",
+			"Tests\\": "tests/"
+		},
+		"files": [
+			"src/FileHelper.php"
+		]
+	},
+	"require": {
+		"php": ">=8.3"
+	},
+	"require-dev": {
+		"symfony/var-dumper": "^8.1",
+		"pestphp/pest": "5.x-dev"
+	},
+	"config": {
+		"allow-plugins": {
+			"pestphp/pest-plugin": true
+		}
+	}
+}
