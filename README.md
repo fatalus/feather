@@ -16,6 +16,7 @@ composer require fatalus/feather
 ```
 
 Create a `public/index.php` file:
+Or copy the code from `skeleton/` into your projects root and you're good to go!
 
 ```php
 <?php
@@ -45,7 +46,7 @@ use Feather\Engine;
 
 return [
     '/' => fn() => Engine::render('home'),
-    '/hello' => fn() => echo 'Hello, world!',
+    '/hello' => fn() => 'Hello, world!',
     '/posts/(?<slug>[a-zA-Z0-9-]+)' => fn(array $params) => PostController::show($params['slug']),
 ];
 ```
@@ -81,6 +82,35 @@ At the moment:
 - Templates should contain a complete HTML document
 - Some default templates, like `404` are located in the frameworks directory
 
+## Caching
+
+A very simplified version of Caching any form of data in the json format. This is a component that is very optional and completely independent. 
+
+The cached data gets stored in your projects' root directory in the `cache/` directory as `{cache_name}.cache`. Therefore the cached data can be retrieved from anywhere in your project.
+
+You can Cache data and retrieve it again by simply doing this:
+
+```php
+<?php
+
+use Feather\Cache;
+
+$my_data = [
+  'test' => true,
+  'dataset' [
+    'new' => true,
+    'creation_time' => time(),
+    'data' => [
+      1, 2, 3, 4
+    ]
+  ]
+]
+
+Cache::cacheData('my_data', json_encode($my_data));
+
+$my_cached_data = Cache::get('my_data');
+```
+
 ## Project Structure
 
 A Feather Project should look something like this:
@@ -92,6 +122,8 @@ my-app/
 ├── templates/
 │   └── home.phtml
 ├── routes.php
+├── development.php
 ├── vendor/
+├── src/
 └── composer.json
 ```

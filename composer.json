@@ -16,10 +16,7 @@
 		"psr-4": {
 			"Feather\\": "src/",
 			"Tests\\": "tests/"
-		},
-		"files": [
-			"src/FileHelper.php"
-		]
+		}
 	},
 	"require": {
 		"php": ">=8.3"
