@@ -3,14 +3,17 @@
 namespace Feather;
 
 use Feather\Router;
+use Feather\Contracts\RoutingInterface;
 use Exception;
 
 class Kernel
 {
     private Router $router;
 
-    public function __construct() {
-        $this->router = new Router();
+    public function __construct(
+        RoutingInterface $router = new Router()
+    ) {
+        $this->router = $router;
     
         if (!defined('FEATHER_ROOT')) {
             throw new Exception("Root path no specified!");

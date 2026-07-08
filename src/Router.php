@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Feather;
 
 use Feather\Engine;
+use Feather\Contracts\RoutingInterface;
 
-class Router
+class Router implements RoutingInterface
 {
     private const string ROUTE_PATH = FEATHER_ROOT . '/routes.php';
 
@@ -20,8 +21,8 @@ class Router
         // For now we'll only handle GET Routing
         $path = parse_url($uri, PHP_URL_PATH);
 
-        foreach (self::getRoutes() as $pattern => $handler) {
-            $pattern = '#^' . $pattern . '$#';
+        foreach (self::getRoutes() as $route => $handler) {
+            $pattern = $this->resolveRoute($route);
 
             if (preg_match($pattern, $path, $matches)) {
                 return $handler($matches);
@@ -30,6 +31,17 @@ class Router
 
         http_response_code(404);
         return Engine::render("404");
+    }
+
+    private function resolveRoute(string $route): string
+    {
+        $pattern = preg_replace_callback(
+            '/\{([a-zA-Z_][a-zA-Z0-9_]*)\}/',
+            fn($matches) => '(?<' . $matches[1] . '>[^/]+)',
+            $route
+        );
+
+        return '#^' . $pattern . '$#';
     }
 }
 
