@@ -10,4 +10,8 @@ interface RequestInterface {
     public function getHost(): string;
     public function getUserAgent(): string;
     public function getRequestTime(): int;
+    public function getQueryParams(): array;
+    public function getPostParams(): array;
+    public function getRawBody(): string;
+    public function getJsonBody(): array;
 }
