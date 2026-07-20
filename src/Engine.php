@@ -44,6 +44,14 @@ class Engine
     private function renderFile(string $template, array $data): string
     {
         $path = self::$TEMPLATE_PATH . $template . '.phtml';
+        if (!file_exists($path) || !is_readable($path)) {
+            $fallback = self::$FALLBACK_TEMPLATE_PATH . $template . '.pthml';
+            if (file_exists($path) && is_readable($path)) {
+                $path = $fallback;
+            } else {
+                $path = self::$FALLBACK_TEMPLATE_PATH . '404.phtml';
+            }
+        }
 
         extract($data);
 
