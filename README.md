@@ -29,7 +29,7 @@ define('FEATHER_ROOT', rtrim(__DIR__ . '/..', DIRECTORY_SEPARATOR));
 
 $kernel = new Kernel();
 
-echo $kernel->handle($_SERVER);
+echo $kernel->handle();
 ```
 
 If the entry point to your Web-Server is not located at `public/index.php`, remember to adjust the `FEATHER_ROOT` constant accordingly so it points to the project root.
@@ -45,22 +45,43 @@ use MyApp\PostController;
 use Feather\Engine;
 
 return [
-    '/' => fn() => Engine::render('home'),
-    '/hello' => fn() => 'Hello, world!',
-    '/posts/(?<slug>[a-zA-Z0-9-]+)' => fn(array $params) => PostController::show($params['slug']),
+  '/' => fn() => Engine::render('home'),
+  '/hello' => fn() => 'Hello, world!',
+  '/posts/(?<slug>[a-zA-Z0-9-]+)' => fn(array $params) => PostController::show($params['slug']),
 ];
-```
 
-> **At the moment only GET routes are supported (WIP)**
+use Forza\;
+
+$engine = new Feather\Engine();
+$auth = new MyApp\Controller\AuthController();
+$post = new MyApp\Controller\PostController();
+
+return [
+  'GET' => [
+    '/' => fn() => $engine->render('home'),
+    '/hello' => fn() => 'Hello, world!',
+    '/posts/{post_id}' => fn($params) => $post->show($params),
+  ],
+  'POST' => [
+    '/login' => fn() => $auth->login(),
+  ],
+];
+
+```
 
 Routes are matched using regex, to use named capture groups.
 
 ## Templates
 
-Create a `templates/` directory in the project root.
+Create a `templates/` directory in the project root like this. You can also structure them by putting them in seperating folders.
 
 ```
 templates/
+├── layouts/
+    ├── app.phtml
+    └── admin.phtml
+├── admin/posts/
+    └── edit.phtml
 ├── home.phtml
 └── about.phtml
 ```
@@ -68,11 +89,41 @@ templates/
 Templates can be rendered from anywhere using the `Engine`.
 
 ```php
-use Feather\Engine;
+$engine = new Feather\Engine();
 
 return [
-    '/' => fn() => Engine::render('home'),
+  'GET' => [
+    '/' => fn() => $engine->render('home'),
+    '/' => fn() => $engine->render('admin/posts/edit'),
+  ]
 ];
+```
+
+The actual syntax of the templates is highly inspired by Blade. If you are used to writing Blade or CakePHP templates, you'll feel pretty much at home. This template extends the `layouts/app.phtml` template and renders the content inside the content section in its designated place.
+
+```php
+<?php $this->extend('layouts/app'); ?>
+<?php $this->start('content'); ?>
+  <div>
+    My awesome website!
+  </div>
+<?php $this->end(); ?>
+```
+
+To understand this further, lets also take a look at the template we're extending here. This is basically just a bare html setup. And just like in Laravel or Cake we can also include different templates that we want to have in a different place using the include.
+
+```php
+<body class="bg-gray-950 text-white container mx-auto">
+    <header class="mb-8">
+        <?= $this->include('partials/nav') ?>
+    </header>
+    <main>
+        <?= $this->yield('content') ?>
+    </main>
+    <footer class="mt-8">
+        <?= $this->include('partials/footer') ?>
+    </footer>
+</body>
 ```
 
 At the moment:
