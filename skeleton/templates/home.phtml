@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feather</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        body {
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+                "Segoe UI", sans-serif;
+            background: #fafafa;
+            color: #111827;
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        main {
+            max-width: 700px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 84px;
+            height: 84px;
+            margin: 0 auto 2rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #60a5fa, #2563eb);
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 12px 32px rgba(37, 99, 235, .25);
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: .75rem;
+        }
+
+        p {
+            color: #6b7280;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .version {
+            margin-top: 3rem;
+            color: #9ca3af;
+            font-size: .9rem;
+        }
+
+        code {
+            background: #f3f4f6;
+            padding: .2rem .45rem;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main>
+
+        <div class="logo">F</div>
+
+        <h1>Welcome to Feather</h1>
+
+        <p>
+            Your application is running successfully.
+            Feather has been installed and is ready to build
+            something fast, lightweight and elegant.
+        </p>
+
+        <div class="version">
+            PHP <?= PHP_VERSION ?><br>
+            Feather v0.1.0
+        </div>
+
+    </main>
+
+</body>
+
+</html>

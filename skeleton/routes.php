@@ -1,8 +1,8 @@
 <?php
 
-use Feather\Engine;
+$engine = new Feather\Engine();
 
 return [
-  '/' => fn() => Engine::render('home'),
+  '/' => fn() => $engine->render('home'),
   '/hello' => fn() => 'Hello, world!',
 ];

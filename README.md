@@ -32,7 +32,7 @@ $kernel = new Kernel();
 echo $kernel->handle();
 ```
 
-If the entry point to your Web-Server is not located at `public/index.php`, remember to adjust the `FEATHER_ROOT` constant accordingly so it points to the project root.
+If the entry point to your Web-Server is not located at `public/index.php`, remember to adjust the `FEATHER_ROOT` constant accordingly so it points to the project root. Note that if you do not use any of the Feather Components you do not have to define this constant, as it is soely used by Feahter's internal components.
 
 ## Routing
 
@@ -40,17 +40,6 @@ Create a `routes.php` file in the project root.
 
 ```php
 <?php
-
-use MyApp\PostController;
-use Feather\Engine;
-
-return [
-  '/' => fn() => Engine::render('home'),
-  '/hello' => fn() => 'Hello, world!',
-  '/posts/(?<slug>[a-zA-Z0-9-]+)' => fn(array $params) => PostController::show($params['slug']),
-];
-
-use Forza\;
 
 $engine = new Feather\Engine();
 $auth = new MyApp\Controller\AuthController();
@@ -155,11 +144,21 @@ $my_data = [
       1, 2, 3, 4
     ]
   ]
-]
+];
 
 Cache::cacheData('my_data', json_encode($my_data));
 
 $my_cached_data = Cache::get('my_data');
+```
+
+## Extending Functionality
+
+The Framework can be completely customized as it was built with the purpose of being completely Modular. As an example, if you want to change the Routing Component from the Default one Provided by Feather, you can simply create your own by implementing the `Feather\Contracts\RoutingInterface` class. Then you can pass your custom Router into the Kernel which will then handle the Routing for you. For this to work you'll need to adjust the index.php to include your custom router.
+
+```php
+<?php
+
+$kernel = new Kernel(new MyApp/Router(), new MyApp/Request());
 ```
 
 ## Project Structure
