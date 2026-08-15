@@ -15,6 +15,12 @@ Install Feather as a Composer dependency.
 composer require fatalus/feather
 ```
 
+**Then simply copy the skeleton into your project**
+
+```bash
+cp -r ./vendor/fatalus/feather/skeleton/* ./
+```
+
 Create a `public/index.php` file:
 Or copy the code from `skeleton/` into your projects root and you're good to go!
 
@@ -25,7 +31,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Feather\Kernel;
 
-define('FEATHER_ROOT', rtrim(__DIR__ . '/..', DIRECTORY_SEPARATOR));
+define('FEATHER_ROOT', realpath(rtrim(__DIR__ . '/..', DIRECTORY_SEPARATOR)));
 
 $kernel = new Kernel();
 

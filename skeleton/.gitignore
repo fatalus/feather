@@ -1,3 +1,9 @@
+# deps
 vendor
+node_modules
+
+# Feathers Cache Directory
 cache
+
+# Development settings ran in the Feather Kernel
 development.php

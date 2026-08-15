@@ -3,6 +3,8 @@
 $engine = new Feather\Engine();
 
 return [
-  '/' => fn() => $engine->render('home'),
-  '/hello' => fn() => 'Hello, world!',
+  'GET' => [
+    '/' => fn() => $engine->render('home'),
+    '/hello' => fn() => 'Hello, world!',
+  ]
 ];
