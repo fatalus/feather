@@ -90,4 +90,3 @@ class Engine
         echo $this->renderFile($template, $data);
     }
 }
-

@@ -25,7 +25,7 @@ class Cache
         return (bool) $result === true ? true : false;
     }
 
-    public static function getCacheData(string $name)
+    public static function getCacheData(string $name): string
     {
         $data = '';
         $fp = self::CACHE_DIR . $name . '.cache';
@@ -37,4 +37,3 @@ class Cache
         return $data;
     }
 }
-
