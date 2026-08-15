@@ -55,4 +55,3 @@ class Router implements RoutingInterface
         return '#^' . $pattern . '$#';
     }
 }
-

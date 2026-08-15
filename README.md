@@ -2,10 +2,7 @@
 
 A modular, minimalist PHP microframework.
 
-This project was a result of me attempting to write a PHP application from scratch, which somehow turned into a tiny microframework. You can read more of the whereabouts and the origin of this on my [Website](https://fatalus.dev/source)
-
-> **Note**
-> Feather is in early development and is **not available on Packagist** (yet).
+This project was the result of me attempting to write a PHP application from scratch, which somehow turned into a tiny microframework, which I extended so it can be used for full Projects instead of only static Websites.
 
 ## Getting Started
 
