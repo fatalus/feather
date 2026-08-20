@@ -31,7 +31,13 @@ class Cache
         $fp = self::CACHE_DIR . $name . '.cache';
 
         if (file_exists($fp) && is_readable($fp)) {
-            $data = file_get_contents($fp);
+            $content = file_get_contents($fp);
+
+            if ($content === false) {
+                return "";
+            }
+
+            $data = $content;
         }
 
         return $data;

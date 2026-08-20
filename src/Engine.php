@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace Feather;
 
+use Exception;
+
 /**
  * Simple templating Engine
  */
 class Engine
 {
+    /** @var array<string, string> */
     private array $sections = [];
 
+    /** @var array<int, string> */
     private array $section_stack = [];
     
     private ?string $layout = null;
@@ -27,6 +31,12 @@ class Engine
      */
     private static string $FALLBACK_TEMPLATE_PATH = __DIR__ . '/templates/';
 
+    /**
+     * Renders a template
+     * @param string $template
+     * @param array<string, mixed> $data
+     * @return string
+     */
     public function render(string $template, array $data = []): string
     {
         $this->layout = null;
@@ -41,6 +51,13 @@ class Engine
         return $content;
     }
 
+    /**
+     * @internal renders the file of the give template
+     * @phpstan-impure
+     * @param string $template
+     * @param array<string, mixed> $data
+     * @return string
+     */
     private function renderFile(string $template, array $data): string
     {
         $path = self::$TEMPLATE_PATH . $template . '.phtml';
@@ -59,7 +76,9 @@ class Engine
 
         require $path;
 
-        return ob_get_clean();
+        $ob_clean = ob_get_clean();
+
+        return $ob_clean !== false ? $ob_clean : "";
     }
 
     public function extend(string $layout): void
@@ -77,7 +96,12 @@ class Engine
     {
         $name = array_pop($this->section_stack);
 
-        $this->sections[$name] = ob_get_clean();
+        if ($name === null) {
+            throw new Exception('Cannot end a section with no active section.');
+        }
+
+        $ob_clean = ob_get_clean();
+        $this->sections[$name] = $ob_clean !== false ? $ob_clean : "";
     }
 
     public function yield(string $name, string $default = ''): string
@@ -85,6 +109,12 @@ class Engine
         return $this->sections[$name] ?? $default;
     }
 
+    /**
+     * Placeholder to render a section in a tempalte
+     * @param string $template
+     * @param array<string, mixed> $data
+     * @return void
+     */
     public function include(string $template, array $data = []): void
     {
         echo $this->renderFile($template, $data);
