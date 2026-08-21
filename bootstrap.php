@@ -1,9 +1,9 @@
 <?php
 
-/**
- * Bootstrap the lib for PHPStan
- */
+declare(strict_types=1);
 
-declare(strict_types= 1);
+/**
+ * Bootstraps the lib for PHPStan
+ */
 
 define('FEATHER_ROOT', __DIR__);
