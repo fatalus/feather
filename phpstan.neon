@@ -1,0 +1,13 @@
+parameters:
+    level: 8
+
+    paths:
+        - src
+
+    bootstrapFiles:
+        - bootstrap.php
+
+    ignoreErrors:
+        -
+            # ignore require_once erros, file_exists checks dont get respected here
+            identifier: requireOnce.fileNotFound

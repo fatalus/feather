@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Feather;
 
@@ -48,11 +48,18 @@ class Request implements RequestInterface
         return $this->request_time;
     }
 
+    /**
+     * Returns all GET parameters
+     * @return array<string, mixed>
+     */
     public function getQueryParams(): array
     {
         return $_GET;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getPostParams(): array
     {
         return $_POST;
@@ -60,9 +67,16 @@ class Request implements RequestInterface
 
     public function getRawBody(): string
     {
-        return file_get_contents('php://input');
+        $input = file_get_contents('php://input');
+
+        if ($input === false) return '';
+
+        return $input;
     }
 
+    /**
+     * @return array<string, string|int>
+     */
     public function getJsonBody(): array
     {
         $data = json_decode($this->getRawBody(), true);

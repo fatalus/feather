@@ -23,7 +23,8 @@
 		"php": ">=8.3"
 	},
 	"require-dev": {
-		"pestphp/pest": "5.x-dev"
+		"pestphp/pest": "^5.0",
+		"phpstan/phpstan": "^2.2.2"
 	},
 	"config": {
 		"allow-plugins": {

@@ -17,6 +17,11 @@ class Router implements RoutingInterface
         $this->engine = new Engine();
     }
 
+    /**
+     * Returns all routes defined in the ROUTE_PATH
+     * type mixed actually represents a Closure
+     * @return array<string, array<string, mixed>>
+     */
     public static function getRoutes(): array
     {
         return require_once self::ROUTE_PATH;
@@ -27,6 +32,11 @@ class Router implements RoutingInterface
         $request_method === "HEAD" ? $request_method = "GET" : null;
 
         $path = parse_url($uri, PHP_URL_PATH);
+
+        // treat empty path simply as if it was /
+        if (!is_string($path) || $path === '') {
+            $path = '/';
+        }
 
         $routes = self::getRoutes()[$request_method] ?? [];
 
